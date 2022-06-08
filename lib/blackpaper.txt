@@ -1,0 +1,28 @@
+OutlinedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) =>
+                                MDTopic.withTopic(topicName: topicOne))));
+                  },
+                  child: Text(
+                    topicOne.name,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                )
+
+
+OutlinedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) =>
+                                MDTopic.withTopic(topicName: topicTwo))));
+                  },
+                  child: Text(
+                    topicTwo.name,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                )

@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:liberty_site/topics_page.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 String buffStr = '';
 
+io.Socket socket = io.io('https://localhost:8080');
+
 class MDTopic extends StatelessWidget {
-  final TopicName topicName;
-  const MDTopic.withTopic({super.key, required this.topicName});
+  const MDTopic.withTopic({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final File file = File(topicName.path);
-    buffStr = readFile(file);
+    socket.onConnect((data) {
+      print('connect');
+      socket.emit('msg', 'test');
+    });
+    socket.on('event', (data) => print(data));
+    socket.onDisconnect((_) => print('disconnect'));
+    socket.on('fromServer', (_) => print(_));
 
     return Scaffold(
       appBar: AppBar(
         //automaticallyImplyLeading: false,
-        title: Center(
+        title: const Center(
           child: Text(
-            topicName.name,
-            style: const TextStyle(color: Colors.white),
+            "topicName.name",
+            style: TextStyle(color: Colors.white),
           ),
         ),
         backgroundColor: Colors.black54,
@@ -34,15 +39,5 @@ class MDTopic extends StatelessWidget {
             )),
           )),
     );
-  }
-}
-
-String readFile(File file) {
-  try {
-    final String contents = file.readAsStringSync();
-    return contents;
-  } catch (e) {
-    var result = e.hashCode;
-    return result.toString();
   }
 }

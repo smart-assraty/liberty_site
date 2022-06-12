@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:liberty_site/md_topic.dart';
 import 'topics_page.dart';
 
-TopicName front =
-    TopicName('front', '/home/smraty/lbrtrn/liberty_site/lib/front.html');
-
 void main() {
   runApp(const MyApp());
 }
@@ -71,8 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: MDTopic.withTopic(topicName: front),
+      body: const SafeArea(
+        child: MDTopic.withTopic(),
       ),
     );
   }

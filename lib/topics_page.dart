@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'md_topic.dart';
 import 'main.dart';
 
-final topicOne =
-    TopicName('text.md', '/home/smraty/lbrtrn/liberty_site/lib/text.html');
-final topicTwo =
-    TopicName('text2.md', '/home/smraty/lbrtrn/liberty_site/lib/text2.hrml');
-
 class TopicsPageApp extends StatelessWidget {
   const TopicsPageApp({super.key});
   @override
@@ -55,16 +50,16 @@ class _TopicsPage extends State<TopicsPage> {
                         size: 200,
                       ),
                       OutlinedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) =>
-                                      MDTopic.withTopic(topicName: topicOne))));
-                        },
-                        child: Text(
-                          topicOne.name,
-                          style: const TextStyle(color: Colors.black),
+                        onPressed: (() => print("object")), //() {
+                        //Navigator.push(
+                        //  context,
+                        //MaterialPageRoute(
+                        //  builder: ((context) =>
+                        //    MDTopic.withTopic(topicName: topicOne))));
+                        //},
+                        child: const Text(
+                          "asdfs",
+                          style: TextStyle(color: Colors.black),
                         ),
                       )
                     ],
@@ -78,16 +73,16 @@ class _TopicsPage extends State<TopicsPage> {
                     children: <Widget>[
                       const Icon(Icons.abc, size: 200),
                       OutlinedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: ((context) =>
-                                      MDTopic.withTopic(topicName: topicTwo))));
-                        },
-                        child: Text(
-                          topicTwo.name,
-                          style: const TextStyle(color: Colors.black),
+                        onPressed: (() => print("object")), // () {
+                        //Navigator.push(
+                        //  context,
+                        //MaterialPageRoute(
+                        //  builder: ((context) =>
+                        //    MDTopic.withTopic(topicName: topicTwo))));
+                        //},
+                        child: const Text(
+                          "adsfasdf",
+                          style: TextStyle(color: Colors.black),
                         ),
                       )
                     ],
@@ -96,11 +91,4 @@ class _TopicsPage extends State<TopicsPage> {
           ],
         ));
   }
-}
-
-class TopicName {
-  String name;
-  String path;
-
-  TopicName(this.name, this.path);
 }

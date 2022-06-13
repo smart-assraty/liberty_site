@@ -11,19 +11,18 @@ class MDTopic extends StatelessWidget {
   const MDTopic.withTopic({super.key});
 
   Future<String> getRequest() async {
-    final response = await http.get(_uri);
-    if (response == null) {
-      return "response is null";
+    final response = await http.get(_uri).then((response) {
+      buffStr = response.body;
+    });
+    if (response != null) {
+      return response;
     } else {
-      return response.body;
+      return "no data";
     }
-    ;
   }
 
   @override
   Widget build(BuildContext context) {
-    getRequest().then((value) => buffStr = value);
-
     return Scaffold(
       appBar: AppBar(
         //automaticallyImplyLeading: false,
@@ -39,8 +38,15 @@ class MDTopic extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: SafeArea(
             child: Center(
-                child: Html(
-              data: buffStr,
+                child: FutureBuilder(
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.none &&
+                    snapshot.hasData == null) {
+                  return const Text("No connection");
+                }
+                return Html(data: buffStr);
+              },
+              future: getRequest(),
             )),
           )),
     );

@@ -1,30 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:socket_io_client/socket_io_client.dart' as io;
+import 'package:http/http.dart' as http;
 
 String buffStr = '';
 
-io.Socket socket = io.io('https://localhost:8080');
+String url = "http://127.0.0.1:8080/";
+Uri _uri = Uri.parse(url);
 
 class MDTopic extends StatelessWidget {
   const MDTopic.withTopic({super.key});
 
+  Future<String> getRequest() async {
+    final response = await http.get(_uri);
+    if (response == null) {
+      return "response is null";
+    } else {
+      return response.body;
+    }
+    ;
+  }
+
   @override
   Widget build(BuildContext context) {
-    socket.onConnect((data) {
-      print('connect');
-      socket.emit('msg', 'test');
-    });
-    socket.on('event', (data) => print(data));
-    socket.onDisconnect((_) => print('disconnect'));
-    socket.on('fromServer', (_) => print(_));
+    getRequest().then((value) => buffStr = value);
 
     return Scaffold(
       appBar: AppBar(
         //automaticallyImplyLeading: false,
         title: const Center(
           child: Text(
-            "topicName.name",
+            "front.html",
             style: TextStyle(color: Colors.white),
           ),
         ),

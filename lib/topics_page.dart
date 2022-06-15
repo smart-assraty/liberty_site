@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'md_topic.dart';
+import 'backend_connector.dart' as bc;
+import 'topic.dart';
 import 'main.dart';
+
+bc.BackendConnector _backendConnector = bc.BackendConnector();
 
 class TopicsPageApp extends StatelessWidget {
   const TopicsPageApp({super.key});
@@ -22,7 +25,6 @@ class TopicsPageApp extends StatelessWidget {
 
 class TopicsPage extends StatefulWidget {
   const TopicsPage({Key? key}) : super(key: key);
-
   @override
   State<TopicsPage> createState() => _TopicsPage();
 }
@@ -37,58 +39,32 @@ class _TopicsPage extends State<TopicsPage> {
             title: const Center(
               child: Text('Libertarian site'),
             )),
-        body: Row(
-          children: <Widget>[
-            Padding(
-                padding: const EdgeInsets.fromLTRB(80, 10, 80, 0),
-                child: Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const Icon(
-                        Icons.abc,
-                        size: 200,
-                      ),
-                      OutlinedButton(
-                        onPressed: (() => print("object")), //() {
-                        //Navigator.push(
-                        //  context,
-                        //MaterialPageRoute(
-                        //  builder: ((context) =>
-                        //    MDTopic.withTopic(topicName: topicOne))));
-                        //},
-                        child: const Text(
-                          "asdfs",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      )
-                    ],
-                  ),
-                )),
-            Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Card(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const Icon(Icons.abc, size: 200),
-                      OutlinedButton(
-                        onPressed: (() => print("object")), // () {
-                        //Navigator.push(
-                        //  context,
-                        //MaterialPageRoute(
-                        //  builder: ((context) =>
-                        //    MDTopic.withTopic(topicName: topicTwo))));
-                        //},
-                        child: const Text(
-                          "adsfasdf",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      )
-                    ],
-                  ),
-                )),
-          ],
+        body: FutureBuilder(
+          builder: ((context, AsyncSnapshot<bc.TopicList> snapshot) {
+            if (snapshot.connectionState == ConnectionState.none &&
+                snapshot.hasData == null) {
+              return const CircularProgressIndicator();
+            } else {
+              return Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: Card(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const Icon(Icons.abc, size: 200),
+                        OutlinedButton(
+                          onPressed: () {},
+                          child: Text(
+                            snapshot.data!.name,
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        )
+                      ],
+                    ),
+                  ));
+            }
+          }),
+          future: _backendConnector.initialRequest(),
         ));
   }
 }

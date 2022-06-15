@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:liberty_site/md_topic.dart';
+import 'package:liberty_site/topic.dart';
 import 'topics_page.dart';
 
 void main() {
@@ -68,8 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: const SafeArea(
-        child: MDTopic.withTopic(),
+      body: SafeArea(
+        child: Topic(topicName: "front.html"),
       ),
     );
   }

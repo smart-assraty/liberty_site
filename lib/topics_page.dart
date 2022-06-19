@@ -41,10 +41,9 @@ class _TopicsPage extends State<TopicsPage> {
             )),
         body: FutureBuilder(
           builder: ((context, AsyncSnapshot<bc.TopicList> snapshot) {
-            if (snapshot.connectionState == ConnectionState.none &&
-                snapshot.hasData == null) {
-              return const CircularProgressIndicator();
-            } else {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData == true &&
+                snapshot.data != null) {
               return Padding(
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Card(
@@ -53,7 +52,13 @@ class _TopicsPage extends State<TopicsPage> {
                       children: <Widget>[
                         const Icon(Icons.abc, size: 200),
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => Topic(
+                                        topicName: snapshot.data!.name))));
+                          },
                           child: Text(
                             snapshot.data!.name,
                             style: const TextStyle(color: Colors.black),
@@ -62,6 +67,8 @@ class _TopicsPage extends State<TopicsPage> {
                       ],
                     ),
                   ));
+            } else {
+              return const Center(child: CircularProgressIndicator());
             }
           }),
           future: _backendConnector.initialRequest(),

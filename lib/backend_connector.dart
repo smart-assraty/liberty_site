@@ -1,19 +1,20 @@
 import 'package:http/http.dart' as http;
 
-String url = "http://127.0.0.1:80/";
+String url = "http://192.168.1.88:80/";
 
 class BackendConnector {
   BackendConnector();
   String buffString = "";
 
   Future<String> getTopicRequest(String name) async {
-    Uri uri = Uri.parse("$url$name/");
+    Uri uri = Uri.parse("$url$name");
     final response = await http.get(uri);
     if (response.statusCode == 200) {
       buffString = response.body;
       return buffString;
     } else {
-      return "no data";
+      String status = response.statusCode as String;
+      return status;
     }
   }
 

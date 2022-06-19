@@ -29,11 +29,12 @@ class Topic extends StatelessWidget {
             child: Center(
                 child: FutureBuilder(
               builder: (context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.connectionState == ConnectionState.none &&
-                    snapshot.hasData == false) {
-                  return const CircularProgressIndicator();
-                } else {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData == true &&
+                    snapshot.data != null) {
                   return Html(data: snapshot.data);
+                } else {
+                  return const Center(child: CircularProgressIndicator());
                 }
               },
               future: _backendConnector.getTopicRequest(name),

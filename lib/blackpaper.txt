@@ -45,3 +45,34 @@ children: <Widget>[
                   ),
                 )),
           ],
+
+
+
+
+
+
+
+
+
+
+Card(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const Icon(Icons.abc, size: 200),
+                        OutlinedButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) => Topic(
+                                        topicName: snapshot.data!.name))));
+                          },
+                          child: Text(
+                            snapshot.data!.name,
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        )
+                      ],
+                    ),
+                  ));

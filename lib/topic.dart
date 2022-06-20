@@ -32,7 +32,7 @@ class Topic extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData == true &&
                     snapshot.data != null) {
-                  return Html(data: snapshot.data);
+                  return ListView(children: <Widget>[Html(data: snapshot.data)]);
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }

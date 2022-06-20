@@ -44,29 +44,40 @@ class _TopicsPage extends State<TopicsPage> {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData == true &&
                 snapshot.data != null) {
-              return Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: Card(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        const Icon(Icons.abc, size: 200),
-                        OutlinedButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => Topic(
-                                        topicName: snapshot.data!.name))));
-                          },
-                          child: Text(
-                            snapshot.data!.name,
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                        )
-                      ],
-                    ),
-                  ));
+              final List<String> elements = [];
+              elements.add(snapshot.data!.name);
+              return const Center(child: CircularProgressIndicator());
+              /*GridView.builder(
+                  itemCount: elements.length,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 350,
+                    crossAxisSpacing: 20.0,
+                    mainAxisSpacing: 20.0,
+                  ),
+                  itemBuilder: (context, i) => Card(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const Icon(Icons.abc, size: 200),
+                            OutlinedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((
+                                      context,
+                                    ) =>
+                                            Topic(topicName: elements[i]))));
+                              },
+                              child: Text(
+                                snapshot.data!.name,
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            )
+                          ],
+                        ),
+                      ))*/
+              ;
             } else {
               return const Center(child: CircularProgressIndicator());
             }

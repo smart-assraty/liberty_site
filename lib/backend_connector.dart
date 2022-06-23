@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-String url = "http://192.168.1.77:80/";
+String url = "http://192.168.1.88:80/";
 
 class BackendConnector {
   BackendConnector();
